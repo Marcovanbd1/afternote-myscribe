@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>After Notes & MyScribe — Neighbourhood CoLab CIC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a1a;
+    --mid: #555;
+    --light: #999;
+    --lighter: #aaa;
+    --rule: #e8e8e8;
+    --warm: #f7f7f5;
+    --blue: #4a90d9;
+    --gold: #c9a84c;
+    --gold-glow: rgba(201,168,76,0.15);
+    --dark: #0e1410;
+    --dark-mid: #1c2218;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ─── SECTION SHELL ─────────────────────────────── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 1rem;
+  }
+
+  .eyebrow-gold {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  /* ─── HERO ───────────────────────────────────────── */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-kicker {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+    max-width: 680px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-body {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--mid);
+    max-width: 580px;
+  }
+
+  /* ─── TYPOGRAPHY ─────────────────────────────────── */
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    max-width: 620px;
+  }
+
+  .body-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--mid);
+    max-width: 580px;
+    margin-bottom: 1rem;
+  }
+
+  .body-text:last-child { margin-bottom: 0; }
+
+  /* ─── PROBLEM GRID ───────────────────────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .problem-cell {
+    background: #fff;
+    padding: 1.5rem;
+  }
+
+  .problem-cell-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 0.6rem;
+  }
+
+  .problem-cell-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--mid);
+  }
+
+  /* ─── PRINCIPLE BLOCK ────────────────────────────── */
+  .principle-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .principle-card {
+    background: var(--warm);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+
+  .principle-quote {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+
+  .principle-sub {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--mid);
+  }
+
+  /* ─── SIDE BY SIDE COMPARISON ────────────────────── */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    align-items: start;
+  }
+
+  .col-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 1.25rem;
+  }
+
+  /* Clinical note column */
+  .note-block { margin-bottom: 1rem; }
+
+  .note-head {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 0.35rem;
+  }
+
+  .note-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--mid);
+  }
+
+  /* After Note column */
+  .after-title {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .after-intro {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--mid);
+    margin-bottom: 1rem;
+  }
+
+  .after-section-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 0.5rem;
+  }
+
+  .med-card {
+    background: var(--warm);
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .med-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .med-detail {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .after-callout {
+    margin: 0.75rem 0;
+    border-left: 2px solid var(--blue);
+    padding: 0.5rem 0.75rem;
+    background: #eef4fb;
+  }
+
+  .after-callout p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .after-warning {
+    margin: 0.75rem 0;
+    border-left: 2px solid #e07b3a;
+    padding: 0.5rem 0.75rem;
+    background: #fdf3ec;
+  }
+
+  .after-warning-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #e07b3a;
+    margin-bottom: 0.4rem;
+  }
+
+  .after-warning ul {
+    padding-left: 1rem;
+  }
+
+  .after-warning li {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .after-warning-footer {
+    font-size: 12px;
+    color: var(--ink);
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
+  .after-link-block {
+    padding: 0.6rem 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background: #fff;
+    margin-top: 0.75rem;
+  }
+
+  .after-link-text {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .after-link-sub {
+    font-size: 11px;
+    color: var(--lighter);
+  }
+
+  .after-link-arrow {
+    color: var(--lighter);
+    font-size: 13px;
+  }
+
+  .after-footer-note {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--lighter);
+    line-height: 1.6;
+  }
+
+  /* ─── ANNOTATIONS ────────────────────────────────── */
+  .annotation-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .annotation {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .annotation-tag {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lighter);
+    padding-top: 2px;
+    line-height: 1.5;
+  }
+
+  .annotation-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--mid);
+    border-left: 1px solid var(--rule);
+    padding-left: 1.25rem;
+  }
+
+  /* ─── OMISSIONS ──────────────────────────────────── */
+  .omission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .omission-card {
+    padding: 1.1rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+  }
+
+  .omission-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    text-decoration: line-through;
+    text-decoration-color: #ccc;
+  }
+
+  .omission-reason {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  /* ─── MYSCRIBE DARK SECTIONS ─────────────────────── */
+  .dark-section-outer {
+    background: var(--dark);
+    border-bottom: 1px solid #2a3026;
+  }
+
+  .dark-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .dark-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: #f0e8d0;
+    max-width: 620px;
+    margin-bottom: 1.25rem;
+  }
+
+  .dark-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #8a9080;
+    max-width: 580px;
+    margin-bottom: 1rem;
+  }
+
+  .dark-body:last-child { margin-bottom: 0; }
+
+  /* Journey steps */
+  .journey-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 2.5rem;
+    border: 1px solid #2a3026;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .journey-step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #2a3026;
+    align-items: start;
+  }
+
+  .journey-step:last-child { border-bottom: none; }
+
+  .journey-step.active-step {
+    background: rgba(201,168,76,0.06);
+  }
+
+  .step-num {
+    font-size: 13px;
+    color: var(--gold);
+    opacity: 0.6;
+    padding-top: 2px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .journey-step.active-step .step-num {
+    opacity: 1;
+  }
+
+  .step-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #c8c0a8;
+    margin-bottom: 0.25rem;
+  }
+
+  .journey-step.active-step .step-name {
+    color: #f0e8d0;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: #5a6050;
+    line-height: 1.6;
+  }
+
+  .journey-step.active-step .step-desc {
+    color: #8a9080;
+  }
+
+  /* Phone + content layout */
+  .phone-content-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+
+  .phone-frame {
+    width: 100%;
+  }
+
+  .phone-frame img {
+    width: 100%;
+    border-radius: 36px;
+    display: block;
+  }
+
+  .phone-content-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .dark-callout {
+    border: 1px solid #2a3026;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    background: rgba(201,168,76,0.04);
+  }
+
+  .dark-callout-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 0.6rem;
+  }
+
+  .dark-callout-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #8a9080;
+  }
+
+  .dark-callout-text strong {
+    color: #c8c0a8;
+    font-weight: 500;
+  }
+
+  /* ─── DISPATCH MOMENT ────────────────────────────── */
+  .dispatch-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 2.5rem;
+    border: 1px solid #2a3026;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .dispatch-node {
+    flex: 1;
+    padding: 1.25rem 1.25rem;
+    text-align: center;
+    border-right: 1px solid #2a3026;
+  }
+
+  .dispatch-node:last-child { border-right: none; }
+
+  .dispatch-node.highlight-node {
+    background: rgba(201,168,76,0.07);
+  }
+
+  .dispatch-node-icon {
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  .dispatch-node-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #c8c0a8;
+    margin-bottom: 0.25rem;
+  }
+
+  .dispatch-node.highlight-node .dispatch-node-name {
+    color: var(--gold);
+  }
+
+  .dispatch-node-desc {
+    font-size: 11px;
+    color: #5a6050;
+    line-height: 1.5;
+  }
+
+  .dispatch-node.highlight-node .dispatch-node-desc {
+    color: #8a9080;
+  }
+
+  /* ─── COLAB LENS ─────────────────────────────────── */
+  .lens-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .lens-card {
+    background: var(--warm);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .lens-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .lens-role {
+    font-size: 12px;
+    color: var(--lighter);
+    margin-bottom: 0.6rem;
+  }
+
+  .lens-contribution {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--mid);
+  }
+
+  /* ─── CLOSE ──────────────────────────────────────── */
+  .close-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 520px;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    max-width: 560px;
+  }
+
+  .contact-card {
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .contact-card-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .contact-card-role {
+    font-size: 12px;
+    color: var(--mid);
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .contact-link {
+    font-size: 13px;
+    color: var(--blue);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-link:hover { text-decoration: underline; }
+
+  /* ─── DIVIDER LABEL ──────────────────────────────── */
+  .divider-label {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .divider-label-text {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lighter);
+    white-space: nowrap;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Dark divider */
+  .dark-divider-label {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .dark-divider-text {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+
+  .dark-divider-line {
+    flex: 1;
+    height: 1px;
+    background: #2a3026;
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 640px) {
+    .hero, .section { padding: 3rem 1.25rem; }
+    .dark-section { padding: 3rem 1.25rem; }
+    .principle-pair { grid-template-columns: 1fr; }
+    .comparison-grid { grid-template-columns: 1fr; }
+    .annotation { grid-template-columns: 1fr; gap: 0.5rem; }
+    .annotation-body { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 0.75rem; }
+    .omission-grid { grid-template-columns: 1fr; }
+    .phone-content-grid { grid-template-columns: 1fr; }
+    .phone-frame { max-width: 240px; margin: 0 auto; }
+    .dispatch-flow { flex-direction: column; }
+    .dispatch-node { border-right: none; border-bottom: 1px solid #2a3026; }
+    .dispatch-node:last-child { border-bottom: none; }
+    .lens-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .divider-label, .dark-divider-label { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<div class="hero">
+  <p class="hero-kicker">Neighbourhood CoLab CIC</p>
+  <h1 class="hero-title">At the end of every consultation, something is dispatched to the patient. Nobody designed it for the patient.</h1>
+  <p class="hero-body">The After Note is a different answer to that moment. Built from first principles. Shaped entirely around one question: what does this specific person need to understand and do before they leave the building?</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     DIVIDER
+════════════════════════════════════════════════════ -->
+<div class="divider-label">
+  <span class="divider-label-text">Part One</span>
+  <div class="divider-line"></div>
+  <span class="divider-label-text">After Notes</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     THE PROBLEM
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <p class="eyebrow">The gap that already exists</p>
+  <h2 class="section-title">Every GP system has a dispatch moment. What currently leaves is a byproduct of the record.</h2>
+  <p class="body-text">Patients leave consultations with incomplete recall of what was said, uncertainty about their medications, and no reliable decision point for when to seek further help. This is not a technology problem. It is a design problem. The infrastructure to solve it already exists in every practice.</p>
+
+  <div class="problem-grid">
+    <div class="problem-cell">
+      <p class="problem-cell-label">For AVT suppliers</p>
+      <p class="problem-cell-text">The ambient capture moment already generates a structured summary. The After Note is what that summary becomes for the patient, without adding clinical workload.</p>
+    </div>
+    <div class="problem-cell">
+      <p class="problem-cell-label">For GP practices</p>
+      <p class="problem-cell-text">Safety netting that is specific rather than generic. A documented, defensible record of what the patient was told and when. Fewer follow-up calls about medication instructions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PRINCIPLES
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <p class="eyebrow">The design principles</p>
+  <h2 class="section-title">Two rules govern every decision about what goes into an After Note.</h2>
+
+  <div class="principle-pair">
+    <div class="principle-card">
+      <p class="principle-quote">Nothing for completeness. Everything for utility.</p>
+      <p class="principle-sub">Every element earns its place by answering one question: would this specific person, in this specific moment, actually use this? The bar is use, not possibility. That question is what makes an After Note different from everything that currently exists in this space.</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-quote">Nothing that isn't already there.</p>
+      <p class="principle-sub">The After Note contains nothing the clinician did not put into the approved summary. It selects, clarifies, and structures. It does not infer, interpret, or add. The GP's approved note is the boundary. This is both a design principle and a regulatory one.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     WORKED EXAMPLE
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <p class="eyebrow">A worked example</p>
+  <h2 class="section-title">A patient with a respiratory condition, worsening breathing, flying to the Caribbean on Sunday.</h2>
+  <p class="body-text">They came in scared their holiday was going to be ruined. Here is what the clinical note contained, and what the After Note returned to them.</p>
+
+  <div class="comparison-grid">
+
+    <div>
+      <p class="col-label">Clinical note</p>
+      <div class="note-block">
+        <p class="note-head">History</p>
+        <p class="note-text">Face to face follow-up for worsening breathing. Pre-existing condition prone to causing breathing issues. Plans to travel to the Caribbean on Sunday. Concerned about enjoying the holiday. Exercises regularly but currently finds any exercise tiring. No red flag symptoms.</p>
+      </div>
+      <div class="note-block">
+        <p class="note-head">Medications</p>
+        <p class="note-text">Foster inhaler, carbocisteine.</p>
+      </div>
+      <div class="note-block">
+        <p class="note-head">Examination</p>
+        <p class="note-text">Mild wheeze and a few crackles noted.</p>
+      </div>
+      <div class="note-block">
+        <p class="note-head">Diagnosis</p>
+        <p class="note-text">Worsening breathing.</p>
+      </div>
+      <div class="note-block">
+        <p class="note-head">Plan</p>
+        <p class="note-text">Antibiotics twice daily for seven days. Oral steroids once daily for five days. Take with food. Alongside existing medications.</p>
+      </div>
+      <div class="note-block">
+        <p class="note-head">Safety netting</p>
+        <p class="note-text">If not better by Sunday, book Thursday or Friday. If symptoms worsen, return.</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="col-label">After Note</p>
+      <h3 class="after-title">Your breathing and what to do before Sunday</h3>
+      <p class="after-intro">You have been prescribed a short course of antibiotics and steroids to help improve your breathing over the next few days.</p>
+      <p class="after-section-label">What to take</p>
+      <div class="med-card">
+        <p class="med-name">Antibiotics</p>
+        <p class="med-detail">Take twice a day for 7 days, with breakfast and your evening meal.</p>
+      </div>
+      <div class="med-card">
+        <p class="med-name">Steroids</p>
+        <p class="med-detail">Take once a day for 5 days, with breakfast. Take with food if possible.</p>
+      </div>
+      <div class="med-card">
+        <p class="med-name">Your usual inhalers and carbocisteine</p>
+        <p class="med-detail">Continue these as normal.</p>
+      </div>
+      <div class="after-callout">
+        <p><strong>Before you travel:</strong> the aim of this treatment is to improve your breathing before your trip. If you are not improving by Sunday, contact the surgery before travelling.</p>
+      </div>
+      <div class="after-warning">
+        <p class="after-warning-label">Get medical help sooner if</p>
+        <ul>
+          <li>your breathing gets worse</li>
+          <li>you feel short of breath at rest</li>
+          <li>you develop chest pain</li>
+          <li>you feel significantly more unwell, feverish, or confused</li>
+          <li>you are struggling to speak in full sentences</li>
+        </ul>
+        <p class="after-warning-footer">If symptoms are severe or sudden, seek urgent medical help.</p>
+      </div>
+      <a class="after-link-block" href="https://www.gov.uk/foreign-travel-advice" target="_blank">
+        <div>
+          <p class="after-link-text">Going abroad</p>
+          <p class="after-link-sub">What to do if you become unwell while travelling</p>
+        </div>
+        <span class="after-link-arrow">→</span>
+      </a>
+      <div class="after-footer-note">From your GP at Weymouth &amp; Portland PCN. Questions? Contact the surgery.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ANNOTATIONS
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <p class="eyebrow">The decisions, explained</p>
+  <h2 class="section-title">Every word in the After Note was a choice. Here is the reasoning behind the key ones.</h2>
+
+  <div class="annotation-list">
+    <div class="annotation">
+      <p class="annotation-tag">The title</p>
+      <p class="annotation-body">The clinical note says "worsening breathing." That is a diagnosis. The After Note says "your breathing and what to do before Sunday." That is the reason they came in. The patient did not come in with a respiratory presentation. They came in worried about their trip. The title names what they are actually facing.</p>
+    </div>
+    <div class="annotation">
+      <p class="annotation-tag">The medication cards</p>
+      <p class="annotation-body">The note names antibiotics and steroids but does not tell the patient how to take them in a way they will remember. The cards strip back to what matters: what, when, with what. The existing medications are grouped under "your usual" so nothing feels changed. Focus stays on the two new things they need to remember.</p>
+    </div>
+    <div class="annotation">
+      <p class="annotation-tag">The travel callout</p>
+      <p class="annotation-body">The safety netting in the clinical note is written for the record. The callout is written for the person. It centres the aim of treatment and gives a clear decision point without implying the consultation clinically endorsed travel. The note reflects the situation. It does not make commitments the consultation did not make.</p>
+    </div>
+    <div class="annotation">
+      <p class="annotation-tag">The one link</p>
+      <p class="annotation-body">We could have added NHS 111, the surgery website, a breathing exercises guide, a travel insurance reminder. We added one link. The foreign travel advice page answers the practical question the consultation could not fully address: what do I do if I get ill while away? One link gets clicked. Eight links get ignored.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     OMISSIONS
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <p class="eyebrow">What was left out and why</p>
+  <h2 class="section-title">These are the things from the clinical note that did not make the After Note. Every omission was a decision.</h2>
+
+  <div class="omission-grid">
+    <div class="omission-card">
+      <p class="omission-item">Mild wheeze and crackles</p>
+      <p class="omission-reason">Examination findings. Written for the clinical record. The patient cannot act on this and it would worry them without purpose.</p>
+    </div>
+    <div class="omission-card">
+      <p class="omission-item">Diagnosis: worsening breathing</p>
+      <p class="omission-reason">They already know their breathing is worse. Labelling it adds nothing. The After Note addresses the situation, not the classification.</p>
+    </div>
+    <div class="omission-card">
+      <p class="omission-item">Pre-existing condition detail</p>
+      <p class="omission-reason">They have lived with this condition. They do not need it explained back to them at the end of a consultation.</p>
+    </div>
+    <div class="omission-card">
+      <p class="omission-item">Exercise currently tiring</p>
+      <p class="omission-reason">They told the GP this. Reflecting it back is noise. The medication addresses it. The After Note focuses on the medication.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     DARK DIVIDER — MYSCRIBE
+════════════════════════════════════════════════════ -->
+<div class="dark-section-outer" style="border-bottom: none;">
+  <div class="dark-divider-label">
+    <span class="dark-divider-text">Part Two</span>
+    <div class="dark-divider-line"></div>
+    <span class="dark-divider-text">MyScribe</span>
+    <div class="dark-divider-line"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MYSCRIBE INTRO
+════════════════════════════════════════════════════ -->
+<div class="dark-section-outer">
+  <div class="dark-section">
+    <p class="eyebrow-gold">MyScribe</p>
+    <h2 class="dark-title">The After Note starts in the patient's pocket, before the appointment begins.</h2>
+    <p class="dark-body">MyScribe is a free app the patient carries into their appointment. They ask the GP for consent to record. They hit record. They have their appointment. They hit stop. The After Note arrives on their phone before they reach the door.</p>
+    <p class="dark-body">The patient owns every part of this. Their phone. Their app. Their record. Their After Note.</p>
+
+    <div class="journey-steps">
+      <div class="journey-step">
+        <span class="step-num">01</span>
+        <div>
+          <p class="step-name">Patient opens MyScribe</p>
+          <p class="step-desc">On their phone, in the waiting room. Nothing required from the practice in advance.</p>
+        </div>
+      </div>
+      <div class="journey-step active-step">
+        <span class="step-num">02</span>
+        <div>
+          <p class="step-name">Patient asks the GP</p>
+          <p class="step-desc">"Do you mind if I record this, just for my own records?" The patient initiates consent. It is theirs to ask.</p>
+        </div>
+      </div>
+      <div class="journey-step active-step">
+        <span class="step-num">03</span>
+        <div>
+          <p class="step-name">Patient hits record</p>
+          <p class="step-desc">The consultation happens. MyScribe listens.</p>
+        </div>
+      </div>
+      <div class="journey-step active-step">
+        <span class="step-num">04</span>
+        <div>
+          <p class="step-name">Patient hits stop</p>
+          <p class="step-desc">The appointment ends. Processing begins immediately.</p>
+        </div>
+      </div>
+      <div class="journey-step">
+        <span class="step-num">05</span>
+        <div>
+          <p class="step-name">After Note arrives</p>
+          <p class="step-desc">On the patient's phone before they reach Reception. Structured. Plain language. Built for them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MYSCRIBE — SCREEN 1 (CONSENT)
+════════════════════════════════════════════════════ -->
+<div class="dark-section-outer">
+  <div class="dark-section">
+
+    <div class="dark-divider-label" style="padding: 0 0 2rem 0; border: none;">
+      <div class="dark-divider-line"></div>
+    </div>
+
+    <div class="phone-content-grid">
+      <div class="phone-frame">
+        <img src="https://raw.githubusercontent.com/placeholder/placeholder/main/IMG-2409.PNG" alt="MyScribe consent screen" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width:100%; aspect-ratio:9/19.5; background:#1a2018; border-radius:36px; border:1px solid #2a3026; align-items:center; justify-content:center; flex-direction:column; gap:1rem;">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:20px;">🎙</span>
+          </div>
+          <p style="font-size:11px;color:#5a6050;letter-spacing:0.08em;text-transform:uppercase;">Image loads from GitHub</p>
+        </div>
+      </div>
+      <div class="phone-content-right">
+        <div>
+          <p class="eyebrow-gold">The consent moment</p>
+          <h3 class="dark-title" style="font-size:clamp(20px,2.5vw,26px);">"Do you mind if I record this, just for my own records?"</h3>
+          <p class="dark-body">This is the patient speaking. The patient is asking the GP. That framing is not incidental. It is the whole point. The patient is not consenting to something being done to them. They are the ones initiating the conversation about consent.</p>
+        </div>
+        <div class="dark-callout">
+          <p class="dark-callout-label">Why this matters</p>
+          <p class="dark-callout-text">Every existing ambient voice product in the NHS asks <strong>the GP</strong> to press record. MyScribe puts the record button in the patient's hand. Same technology. Completely different relationship.</p>
+        </div>
+        <div class="dark-callout">
+          <p class="dark-callout-label">Nothing required from the practice</p>
+          <p class="dark-callout-text">No system integration. No configuration. No training. The patient downloads a free app and brings it to their appointment. The practice receives nothing and does nothing differently.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MYSCRIBE — SCREEN 2 (RECORDING)
+════════════════════════════════════════════════════ -->
+<div class="dark-section-outer">
+  <div class="dark-section">
+
+    <div class="dark-divider-label" style="padding: 0 0 2rem 0; border: none;">
+      <div class="dark-divider-line"></div>
+    </div>
+
+    <div class="phone-content-grid" style="direction: rtl;">
+      <div class="phone-frame" style="direction:ltr;">
+        <img src="https://raw.githubusercontent.com/placeholder/placeholder/main/IMG-2412.PNG" alt="MyScribe recording screen" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width:100%; aspect-ratio:9/19.5; background:#1a2018; border-radius:36px; border:1px solid #2a3026; align-items:center; justify-content:center; flex-direction:column; gap:1rem;">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:20px;">🎵</span>
+          </div>
+          <p style="font-size:11px;color:#5a6050;letter-spacing:0.08em;text-transform:uppercase;">Image loads from GitHub</p>
+        </div>
+      </div>
+      <div class="phone-content-right" style="direction:ltr;">
+        <div>
+          <p class="eyebrow-gold">The recording</p>
+          <h3 class="dark-title" style="font-size:clamp(20px,2.5vw,26px);">The consultation happens. MyScribe listens. That is all.</h3>
+          <p class="dark-body">The patient presses record and puts the phone face down on the desk, or in their pocket. The appointment continues as it always has. The GP does not need to adapt. The patient does not need to manage the technology.</p>
+        </div>
+        <div class="dark-callout">
+          <p class="dark-callout-label">What happens at stop</p>
+          <p class="dark-callout-text">The patient presses stop as they leave. The recording is processed. The After Note is generated from the conversation and <strong>arrives on their phone before they reach Reception.</strong> The consultation moment becomes something they carry with them.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     THE DISPATCH MOMENT
+════════════════════════════════════════════════════ -->
+<div class="dark-section-outer">
+  <div class="dark-section">
+
+    <div class="dark-divider-label" style="padding: 0 0 2rem 0; border: none;">
+      <div class="dark-divider-line"></div>
+    </div>
+
+    <p class="eyebrow-gold">The dispatch moment</p>
+    <h2 class="dark-title">One consultation. One recording. One After Note. Before the car park.</h2>
+    <p class="dark-body">The After Note does not arrive as a letter days later. It does not require the patient to log into a portal. It arrives in the same pocket as the phone that recorded the consultation, within minutes of the appointment ending.</p>
+
+    <div class="dispatch-flow">
+      <div class="dispatch-node">
+        <div class="dispatch-node-icon">🎙</div>
+        <p class="dispatch-node-name">Record</p>
+        <p class="dispatch-node-desc">Patient opens MyScribe. Asks GP. Hits record.</p>
+      </div>
+      <div class="dispatch-node">
+        <div class="dispatch-node-icon">🩺</div>
+        <p class="dispatch-node-name">Consult</p>
+        <p class="dispatch-node-desc">Appointment happens as normal.</p>
+      </div>
+      <div class="dispatch-node">
+        <div class="dispatch-node-icon">⏹</div>
+        <p class="dispatch-node-name">Stop</p>
+        <p class="dispatch-node-desc">Patient presses stop. Processing begins.</p>
+      </div>
+      <div class="dispatch-node highlight-node">
+        <div class="dispatch-node-icon">📋</div>
+        <p class="dispatch-node-name">After Note</p>
+        <p class="dispatch-node-desc">Arrives on phone. Before Reception.</p>
+      </div>
+      <div class="dispatch-node">
+        <div class="dispatch-node-icon">🚗</div>
+        <p class="dispatch-node-name">Patient leaves</p>
+        <p class="dispatch-node-desc">They already have what they need.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     BACK TO LIGHT — WHO IS BEHIND THIS
+════════════════════════════════════════════════════ -->
+<div class="divider-label">
+  <span class="divider-label-text">Behind the work</span>
+  <div class="divider-line"></div>
+</div>
+
+<div class="section">
+  <p class="eyebrow">Neighbourhood CoLab CIC</p>
+  <h2 class="section-title">Four people. Over a century of frontline NHS and local authority experience. One methodology that requires all four lenses at once.</h2>
+  <p class="body-text">Neighbourhood CoLab CIC was founded by four people who grew up together, went separately into public service, and came back to find the problems in neighbourhood health do not sit cleanly inside any one role or team. The After Note methodology requires clinical safety, psychological understanding, local knowledge, and design thinking simultaneously. No existing team holds all four. That is why the CIC exists.</p>
+
+  <div class="lens-grid">
+    <div class="lens-card">
+      <p class="lens-name">Nurse</p>
+      <p class="lens-role">Band 8, 30+ years NHS</p>
+      <p class="lens-contribution">Clinical safety and defensibility. Every decision about what goes in and what stays out has to be justifiable. The After Note cannot overrule the clinician, but it has to be accountable in its own right.</p>
+    </div>
+    <div class="lens-card">
+      <p class="lens-name">Clinical Psychologist</p>
+      <p class="lens-role">20+ years NHS Mental Health</p>
+      <p class="lens-contribution">What a patient can receive depends on what state they're in when they receive it. The After Note is information arriving at a particular emotional moment, and that shapes every word.</p>
+    </div>
+    <div class="lens-card">
+      <p class="lens-name">Social Worker</p>
+      <p class="lens-role">20+ years local authority</p>
+      <p class="lens-contribution">Knows what happens when the NHS has done its bit and the person is back in their life. Knows which local assets are real. Owns the local layer of every After Note.</p>
+    </div>
+    <div class="lens-card">
+      <p class="lens-name">Applied Philosopher</p>
+      <p class="lens-role">Opsimath, NHS Primary Care</p>
+      <p class="lens-contribution">Holds the design question: what is this person's experience of this moment, and what do they deserve from it? Responsible for the omission logic and the principle that utility and clarity are the same thing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CLOSE
+════════════════════════════════════════════════════ -->
+<div class="section" style="border-bottom:none;">
+  <p class="eyebrow">Get in touch</p>
+  <h2 class="close-title">The methodology is built by hand, one consultation type at a time. Hospital discharge is next.</h2>
+  <p class="body-text">Every After Note begins with a real consultation note. We build the After Note manually, document every decision, and from that accumulation draw the rules. The rules become the methodology. The methodology becomes the thing that scales. The hand-built stage is where the intelligence lives, and it cannot be skipped.</p>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <p class="contact-card-label">Contact</p>
+      <p class="contact-card-name">Mark Winterburn</p>
+      <p class="contact-card-role">Digital &amp; Transformation Lead, Weymouth and Portland PCN<br>Director, Neighbourhood CoLab CIC</p>
+      <a class="contact-link" href="mailto:hello@neighbourhoodcolab.co.uk">hello@neighbourhoodcolab.co.uk</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/mark-winterburn/" target="_blank">LinkedIn →</a>
+    </div>
+    <div class="contact-card" style="display:flex;align-items:center;justify-content:center;background:var(--warm);border-color:transparent;">
+      <p style="font-family:'Lora',serif;font-size:16px;font-style:italic;color:var(--mid);line-height:1.6;text-align:center;max-width:200px;">Nothing for completeness.<br>Everything for utility.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
